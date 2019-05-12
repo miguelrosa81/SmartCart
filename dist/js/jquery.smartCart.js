@@ -1,21 +1,28 @@
 /*!
  * jQuery Smart Cart v3.0.1
  * The smart interactive jQuery Shopping Cart plugin with PayPal payment support
- * http://www.techlaboratory.net/smartcart
+ * https://www.techlaboratory.net/smartcart
  *
  * Created by Dipu Raj
- * http://dipuraj.me
+ * https://dipuraj.me
  *
  * Licensed under the terms of the MIT License
  * https://github.com/techlab/SmartCart/blob/master/LICENSE
  */
+ 
+ 
 
+//defaults.cart.push (cartRecent);
 ;(function ($, window, document, undefined) {
     "use strict";
     // Default options
-
+//implement get for inicial cart	
+ var cartRecent = window.localStorage.getItem('cartRecent');
+var cartRecover = JSON.parse(cartRecent);
     var defaults = {
-        cart: [], // initial products on cart
+       
+		cart: cartRecover,
+		
         resultName: 'cart_list', // Submit name of the cart parameter
         theme: 'default', // theme for the cart, related css need to include for other than default theme
         combineProducts: true, // combine similar products on cart
@@ -45,10 +52,10 @@
             ajaxSettings: {} // Ajax extra settings for submit call
         },
         currencySettings: {
-            locales: 'en-US', // A string with a BCP 47 language tag, or an array of such strings
+            locales: 'pt-BR', // A string with a BCP 47 language tag, or an array of such strings
             currencyOptions: {
                 style: 'currency',
-                currency: 'USD',
+                currency: 'BRL',
                 currencyDisplay: 'symbol'
             } // extra settings for the currency formatter. Refer: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString
         },
@@ -376,7 +383,11 @@
 
             // Update cart value to the  cart hidden element 
             $('#' + this.options.resultName, this.cart_element).val(JSON.stringify(this.cart));
-        },
+
+		//  SAVE CART TO LOCAL STORAGE
+			window.localStorage.setItem('cartRecent', JSON.stringify(this.cart));
+			var cartRecent = window.localStorage.getItem('cartRecent');
+					},
         /* 
          * Calculates the cart subtotal
          */

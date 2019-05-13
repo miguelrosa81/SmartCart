@@ -12,7 +12,10 @@
 
 ;(function ($, window, document, undefined) {
     "use strict";
-    // Default options
+//implement get for inicial cart	
+ var cartRecent = window.localStorage.getItem('cartRecent');
+var cartRecover = JSON.parse(cartRecent);
+   // Default options    
 
     var defaults = {
         cart: [], // initial products on cart
@@ -376,6 +379,9 @@
 
             // Update cart value to the  cart hidden element 
             $('#' + this.options.resultName, this.cart_element).val(JSON.stringify(this.cart));
+            	//  SAVE CART TO LOCAL STORAGE
+			window.localStorage.setItem('cartRecent', JSON.stringify(this.cart));
+			var cartRecent = window.localStorage.getItem('cartRecent');
         },
         /* 
          * Calculates the cart subtotal
